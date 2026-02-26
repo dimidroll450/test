@@ -6,9 +6,17 @@
     <input matInput [formControl]="searchFormBook">
   </mat-form-field>
 
-  <app-card 
-    [bookTitle]="'The Great Gatsby'" 
-    [bookDescription]="'A classic American novel set in the Jazz Age.'">
-  </app-card>
-  
+  <div class="card-container">
+    @if(books.length === 0 || book.length < 3) {
+      <p>No books found</p>
+    }
+    @else if (books.length > 0) {
+      @for (book of books; track book.id) {
+        <app-card 
+          [bookTitle]="book.title" 
+          [bookDescription]="book.description">
+        </app-card>
+      }
+    }
+  </div>
 </div>

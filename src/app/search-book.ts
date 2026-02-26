@@ -1,7 +1,13 @@
 import { Injectable } from '@angular/core';
 import { of, shareReplay } from 'rxjs';
 
-const BOOKS = [
+interface Book {
+  id: number;
+  title: string;
+  description: string;
+};
+
+const BOOKS: Book[] = [
   {
     id: 1,
     title: "The Great Gatsby",
