@@ -20,7 +20,8 @@
     @for (book of books; track book.id) {
       <app-card 
         [bookTitle]="book.title" 
-        [bookDescription]="book.description">
+        [bookDescription]="book.description"
+        [searchValue]="searchFormBook.value">
       </app-card>
     } @empty {
       <p>No books found</p>
