@@ -1,22 +1,29 @@
 <div class="container">
   <mat-toolbar color="primary">Search for book</mat-toolbar>
 
-  <mat-form-field>
-    <mat-label>Enter your book</mat-label>
-    <input matInput [formControl]="searchFormBook">
-  </mat-form-field>
+  <div class="search-container">
+    <mat-form-field class="search-input">
+      <mat-label>Enter your book</mat-label>
+      <input matInput [formControl]="searchFormBook">
+    </mat-form-field>
 
+    <mat-form-field>
+      <mat-label>Sort</mat-label>
+      <mat-select [formControl]="sortControl">
+        <mat-option value="newest">Newest</mat-option>
+        <mat-option value="az">A-Z</mat-option>
+        <mat-option value="za">Z-A</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
   <div class="card-container">
-    @if(books.length === 0 || book.length < 3) {
+    @for (book of books; track book.id) {
+      <app-card 
+        [bookTitle]="book.title" 
+        [bookDescription]="book.description">
+      </app-card>
+    } @empty {
       <p>No books found</p>
-    }
-    @else if (books.length > 0) {
-      @for (book of books; track book.id) {
-        <app-card 
-          [bookTitle]="book.title" 
-          [bookDescription]="book.description">
-        </app-card>
-      }
     }
   </div>
 </div>

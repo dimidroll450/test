@@ -1,13 +1,13 @@
 import { Component, signal, OnInit } from '@angular/core';
-// import { RouterOutlet } from '@angular/router';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, startWith } from 'rxjs/operators';
 import { switchMap } from 'rxjs';
 
 // Material
 import { MatToolbar } from '@angular/material/toolbar';
 import { MatInput } from '@angular/material/input';
 import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
 
 import { Card } from './card/card';
 import { SearchBookService } from './search-book';
@@ -21,13 +21,13 @@ interface Book {
 @Component({
   selector: 'app-root',
   imports: [
-    // RouterOutlet, 
     ReactiveFormsModule,
     MatFormField,
     MatInput,
     MatLabel,
     MatToolbar,
-    Card
+    Card,
+    MatSelectModule
   ],
   templateUrl: './app.html',
   styleUrl: './app.scss'
@@ -35,9 +35,10 @@ interface Book {
 export class App implements OnInit {
   protected readonly title = signal('test');
   books: Book[] = [];
-  book: string = '';
 
-  searchFormBook = new FormControl('');
+  searchFormBook = new FormControl('', { nonNullable: true });
+  sortControl = new FormControl<'az' | 'za' | 'newest'>('newest');
+
 
   constructor(
     private searchBookService: SearchBookService
@@ -45,19 +46,40 @@ export class App implements OnInit {
 
   ngOnInit() {
     this.searchFormBook.valueChanges.pipe(
-      debounceTime(200),
-      // distinctUntilChanged(),
+      startWith(''),
+      debounceTime(300),
+      distinctUntilChanged(),
       switchMap((value) => {
-        this.book = value || '';
 
-        if (value && value.trim().length > 1) {
+        // if (value && value.trim().length > 1) {
           return this.searchBookService.search(value);
-        } else {
-          return [];
-        }
+
       })
     ).subscribe((books: Book[]) => {
       this.books = books;
+      this.sortBooks();
     });
+
+    this.sortControl.valueChanges.subscribe(() => {
+      this.sortBooks();
+    })
+  }
+
+  private sortBooks(): void {
+    const clonedBooks = [...this.books];
+
+    switch (this.sortControl.value) {
+      case 'newest':
+        this.books = clonedBooks.sort((a, b) => b.id - a.id);
+        break;
+      case 'az':
+        this.books = clonedBooks.sort((a, b) => a.title.localeCompare(b.title));
+        break;
+      case 'za':
+        this.books = clonedBooks.sort((a, b) => b.title.localeCompare(a.title));
+        break;
+      default:
+        break;
+    }
   }
 }

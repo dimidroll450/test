@@ -2,10 +2,22 @@
   max-width: 1200px;
   margin: 0 auto;
   padding: 1.5rem;
-}
 
-.card-container {
-  display: flex;
-  justify-content: flex-start;
-  gap: 1rem;
+  .search-container {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    width: 100%;
+
+    .search-input {
+      min-width: 20rem;
+    }
+  }
+
+  .card-container {
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
 }
