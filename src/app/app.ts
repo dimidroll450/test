@@ -11,12 +11,8 @@ import { MatSelectModule } from '@angular/material/select';
 
 import { Card } from './card/card';
 import { SearchBookService } from './services/search-book';
+import { Book } from './interfaces/book';
 
-interface Book {
-  id: number;
-  title: string;
-  description: string;
-};
 
 @Component({
   selector: 'app-root',

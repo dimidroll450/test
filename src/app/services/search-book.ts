@@ -1,11 +1,8 @@
 import { Injectable } from '@angular/core';
 import { of, shareReplay, delay, map } from 'rxjs';
 
-interface Book {
-  id: number;
-  title: string;
-  description: string;
-};
+import { Book } from '../interfaces/book';
+
 
 const BOOKS: Book[] = [
   {
