@@ -16,6 +16,11 @@
       </mat-select>
     </mat-form-field>
   </div>
+  <div class="progress-container">
+    @if (loading()) {
+      <mat-progress-bar mode="indeterminate" color="primary" />
+    }
+  </div>
   <div class="card-container">
     @for (book of books(); track book.id) {
       <app-card 
