@@ -34,7 +34,7 @@ interface Book {
 })
 export class App implements OnInit {
   protected readonly title = signal('test');
-  books: Book[] = [];
+  books = signal<Book[]>([]);
 
   searchFormBook = new FormControl('', { nonNullable: true });
   sortControl = new FormControl<'az' | 'za' | 'newest'>('newest');
@@ -58,7 +58,7 @@ export class App implements OnInit {
         return of([]);
       })
     ).subscribe((books: Book[]) => {
-      this.books = books;
+      this.books.set(books);
       this.sortBooks();
     });
 
@@ -68,17 +68,17 @@ export class App implements OnInit {
   }
 
   private sortBooks(): void {
-    const clonedBooks = [...this.books];
+    const clonedBooks = [...this.books()];
 
     switch (this.sortControl.value) {
       case 'newest':
-        this.books = clonedBooks.sort((a, b) => b.id - a.id);
+        this.books.set(clonedBooks.sort((a, b) => b.id - a.id));
         break;
       case 'az':
-        this.books = clonedBooks.sort((a, b) => a.title.localeCompare(b.title));
+        this.books.set(clonedBooks.sort((a, b) => a.title.localeCompare(b.title)));
         break;
       case 'za':
-        this.books = clonedBooks.sort((a, b) => b.title.localeCompare(a.title));
+        this.books.set(clonedBooks.sort((a, b) => b.title.localeCompare(a.title)));
         break;
       default:
         break;

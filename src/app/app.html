@@ -17,7 +17,7 @@
     </mat-form-field>
   </div>
   <div class="card-container">
-    @for (book of books; track book.id) {
+    @for (book of books(); track book.id) {
       <app-card 
         [bookTitle]="book.title" 
         [bookDescription]="book.description"
