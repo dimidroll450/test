@@ -1,7 +1,7 @@
 import { Component, signal, OnInit } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { debounceTime, distinctUntilChanged, startWith } from 'rxjs/operators';
-import { switchMap } from 'rxjs';
+import { switchMap, of } from 'rxjs';
 
 // Material
 import { MatToolbar } from '@angular/material/toolbar';
@@ -10,7 +10,7 @@ import { MatFormField, MatLabel } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 
 import { Card } from './card/card';
-import { SearchBookService } from './search-book';
+import { SearchBookService } from './services/search-book';
 
 interface Book {
   id: number;
@@ -51,9 +51,11 @@ export class App implements OnInit {
       distinctUntilChanged(),
       switchMap((value) => {
 
-        // if (value && value.trim().length > 1) {
+        if (value && value.trim().length > 1) {
           return this.searchBookService.search(value);
+        }
 
+        return of([]);
       })
     ).subscribe((books: Book[]) => {
       this.books = books;

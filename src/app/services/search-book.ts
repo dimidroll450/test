@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { of, shareReplay, delay } from 'rxjs';
+import { of, shareReplay, delay, map } from 'rxjs';
 
 interface Book {
   id: number;
@@ -119,6 +119,16 @@ export class SearchBookService {
     shareReplay(1));
 
   search(value: string) {
-    return this.all$;
+    const normalizedValue = value.trim().toLowerCase();
+
+    return this.all$.pipe(
+      map(books => {
+        if (normalizedValue.length === 0) {
+          return books;
+        }
+
+        return books.filter(book => book.title.toLowerCase().includes(normalizedValue));
+      })
+    )
   }
 }
