@@ -10,6 +10,7 @@ import { MatFormField, MatLabel } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 
 import { Card } from './card/card';
 import { SearchBookService } from './services/search-book';
@@ -27,7 +28,8 @@ import { Book } from './interfaces/book';
     Card,
     MatSelectModule,
     MatProgressBarModule,
-    MatIconModule
+    MatIconModule,
+    MatButtonModule
   ],
   templateUrl: './app.html',
   styleUrl: './app.scss'

@@ -6,6 +6,11 @@
       <mat-label>Enter your book</mat-label>
       <mat-icon matPrefix>search</mat-icon>
       <input matInput [formControl]="searchFormBook">
+      @if (searchFormBook.value) {
+        <button matSuffix matIconButton aria-label="Clear" (click)="searchFormBook.setValue('')">
+          <mat-icon>close</mat-icon>
+        </button>
+  }
       <mat-hint> Enter at least 2 characters to search</mat-hint>
     </mat-form-field>
 
@@ -31,7 +36,9 @@
         [searchValue]="searchFormBook.value">
       </app-card>
     } @empty {
-      <p>No books found</p>
+      @if (!loading()) {
+        <p>No books found</p>
+      }
     }
   </div>
 </div>
