@@ -4,7 +4,9 @@
   <div class="search-container">
     <mat-form-field class="search-input">
       <mat-label>Enter your book</mat-label>
+      <mat-icon matPrefix>search</mat-icon>
       <input matInput [formControl]="searchFormBook">
+      <mat-hint> Enter at least 2 characters to search</mat-hint>
     </mat-form-field>
 
     <mat-form-field>

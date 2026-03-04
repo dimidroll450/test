@@ -5,13 +5,19 @@
 
   .search-container {
     display: flex;
-    flex-direction: row;
     gap: 1rem;
     width: 100%;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
 
     .search-input {
+      flex: 1;
       min-width: 20rem;
     }
+  }
+
+  .progress-container {
+    height: 1rem;
   }
 
   .card-container {
