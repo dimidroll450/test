@@ -50,7 +50,7 @@ export class App implements OnInit {
       tap(() => this.loading.set(true)),
       switchMap((value) => {
 
-        if (value && value.trim().length > 1) {
+        if (value.trim().length !== 1) {
           return this.searchBookService.search(value);
         }
 

@@ -112,7 +112,7 @@ const BOOKS: Book[] = [
 })
 export class SearchBookService {
   private readonly all$ = of(BOOKS).pipe(
-    delay(10000),
+    delay(3000),
     shareReplay(1));
 
   search(value: string) {
